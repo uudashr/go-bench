@@ -2,6 +2,34 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:e307126636dff23d73e1aa30f6cb117ce76f493548c62ff0e7633f903c9172aa"
+  name = "github.com/afex/hystrix-go"
+  packages = [
+    "hystrix",
+    "hystrix/metric_collector",
+    "hystrix/rolling",
+  ]
+  pruneopts = "UT"
+  revision = "fa1af6a1f4f56e0e50d427fe901cd604d8c6fb8a"
+
+[[projects]]
+  digest = "1:553f73a4171c265045ae4f5d3122429ecf2c9c0c232c91f336127fe45480104a"
+  name = "github.com/cenk/backoff"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "62661b46c4093e2c1f38d943e663db1a29873e80"
+  version = "v2.1.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:5fe3f6ede1c208a2efd3b78fe4df0306aa9624edd39476143d14f0326e5a8d29"
+  name = "github.com/facebookgo/clock"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "600d898af40aa09a7a93ecb9265d87b0504b6f03"
+
+[[projects]]
   digest = "1:ce058ca1b1787a997e578c4344f9650becb5086a3512332cbedffca9950d77a1"
   name = "github.com/go-kit/kit"
   packages = [
@@ -37,12 +65,36 @@
   revision = "b84e30acd515aadc4b783ad4ff83aff3299bdfe0"
 
 [[projects]]
+  digest = "1:2704976bbe3459cc3a93c0af2e9e1fc6f0a622db805bbcd1500dfe5977a7ecdf"
+  name = "github.com/rubyist/circuitbreaker"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "2074adba5ddc7d5f7559448a9c3066573521c5bf"
+  version = "v2.2.1"
+
+[[projects]]
   digest = "1:69b1cc331fca23d702bd72f860c6a647afd0aa9fcbc1d0659b1365e26546dd70"
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   pruneopts = "UT"
   revision = "bcd833dfe83d3cebad139e4a29ed79cb2318bf95"
   version = "v1.2.0"
+
+[[projects]]
+  digest = "1:d3ffbc45dfe6929a4ba313464c2d761d96325d306eda29512da56c034db2a4dd"
+  name = "github.com/sony/gobreaker"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "b2a34562d02c4d5fd6645399c69e00141fb24e5a"
+  version = "0.4.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:d99c1021adfe245be33c1e98e9686fa4622c390285228a820a200b727a457705"
+  name = "github.com/streadway/handy"
+  packages = ["breaker"]
+  pruneopts = "UT"
+  revision = "f450267a206e480d863d2a92846a40f6e2896b2a"
 
 [[projects]]
   branch = "master"
@@ -67,9 +119,13 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/afex/hystrix-go/hystrix",
     "github.com/go-kit/kit/log",
     "github.com/go-kit/kit/log/level",
+    "github.com/rubyist/circuitbreaker",
     "github.com/sirupsen/logrus",
+    "github.com/sony/gobreaker",
+    "github.com/streadway/handy/breaker",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
