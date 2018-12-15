@@ -22,6 +22,18 @@
   version = "v2.1.0"
 
 [[projects]]
+  digest = "1:a64ddca0ad73d881e4e4060b89fcf021594c9b5e0570bf78b669f1c9eba1bb66"
+  name = "github.com/cep21/circuit"
+  packages = [
+    ".",
+    "faststats",
+    "internal/evar",
+  ]
+  pruneopts = "UT"
+  revision = "14b9f8e471581683c1cf7147822046cc9aca9d9c"
+  version = "v2.4.1"
+
+[[projects]]
   branch = "master"
   digest = "1:5fe3f6ede1c208a2efd3b78fe4df0306aa9624edd39476143d14f0326e5a8d29"
   name = "github.com/facebookgo/clock"
@@ -120,6 +132,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/afex/hystrix-go/hystrix",
+    "github.com/cep21/circuit",
     "github.com/go-kit/kit/log",
     "github.com/go-kit/kit/log/level",
     "github.com/rubyist/circuitbreaker",

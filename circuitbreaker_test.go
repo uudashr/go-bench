@@ -1,8 +1,11 @@
 package bench_test
 
 import (
+	"context"
 	"testing"
 	"time"
+
+	cep21circuit "github.com/cep21/circuit"
 
 	circuit "github.com/rubyist/circuitbreaker"
 
@@ -73,6 +76,21 @@ func BenchmarkCircuitBreaker_RubyistBreaker(b *testing.B) {
 			_, err := simpleCall()
 			return err
 		}, 1*time.Second)
+	}
+}
+
+func BenchmarkCircuitBreaker_Cep21Circuit(b *testing.B) {
+	cb := cep21circuit.NewCircuitFromConfig("simpleCall", cep21circuit.Config{})
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cb.Execute(context.Background(), func(ctx context.Context) error {
+			_, err := simpleCall()
+			return err
+		}, func(ctx context.Context, err error) error {
+			b.Fatal("Should not enter this block")
+			return nil
+		})
 	}
 }
 
