@@ -27,7 +27,7 @@ func BenchmarkCircuitBreaker_Hystrix(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		hystrix.Go("simpleCall", func() error {
+		hystrix.Do("simpleCall", func() error {
 			_, err := simpleCall()
 			return err
 		}, nil)
