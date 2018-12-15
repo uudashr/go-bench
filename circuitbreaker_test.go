@@ -84,12 +84,9 @@ func BenchmarkCircuitBreaker_Cep21Circuit(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		cb.Execute(context.Background(), func(ctx context.Context) error {
+		cb.Run(context.Background(), func(ctx context.Context) error {
 			_, err := simpleCall()
 			return err
-		}, func(ctx context.Context, err error) error {
-			b.Fatal("Should not enter this block")
-			return nil
 		})
 	}
 }
