@@ -23,6 +23,10 @@ func BenchmarkLog_LogrusDebugLevel(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		logger.WithFields(logrus.Fields{
 			"name": "Nuruddin Ashr",
+		}).Info("Hello, World!")
+
+		logger.WithFields(logrus.Fields{
+			"name": "Nuruddin Ashr",
 		}).Debug("Hello, World!")
 	}
 }
@@ -38,6 +42,10 @@ func BenchmarkLog_LogrusInfoLevel(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		logger.WithFields(logrus.Fields{
 			"name": "Nuruddin Ashr",
+		}).Info("Hello, World!")
+
+		logger.WithFields(logrus.Fields{
+			"name": "Nuruddin Ashr",
 		}).Debug("Hello, World!")
 	}
 }
@@ -50,6 +58,11 @@ func BenchmarkLog_GokitDebugLevel(b *testing.B) {
 	defer b.StopTimer()
 
 	for i := 0; i < b.N; i++ {
+		level.Info(logger).Log(
+			"msg", "Hello, World!",
+			"name", "Nuruddin Ashr",
+		)
+
 		level.Debug(logger).Log(
 			"msg", "Hello, World!",
 			"name", "Nuruddin Ashr",
@@ -67,6 +80,11 @@ func BenchmarkLog_GokitInfoLevel(b *testing.B) {
 	defer b.StopTimer()
 
 	for i := 0; i < b.N; i++ {
+		level.Info(logger).Log(
+			"msg", "Hello, World!",
+			"name", "Nuruddin Ashr",
+		)
+
 		level.Debug(logger).Log(
 			"msg", "Hello, World!",
 			"name", "Nuruddin Ashr",
