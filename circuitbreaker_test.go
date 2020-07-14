@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 
+	eapachebreaker "github.com/eapache/go-resiliency/breaker"
+
 	cep21circuit "github.com/cep21/circuit"
 
 	circuit "github.com/rubyist/circuitbreaker"
@@ -85,6 +87,17 @@ func BenchmarkCircuitBreaker_Cep21Circuit(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cb.Run(context.Background(), func(ctx context.Context) error {
+			_, err := simpleCall()
+			return err
+		})
+	}
+}
+
+func BenchmarkCircuitBreaker_GoResiliency(b *testing.B) {
+	cb := eapachebreaker.New(5, 10, 5*time.Second)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cb.Run(func() error {
 			_, err := simpleCall()
 			return err
 		})
