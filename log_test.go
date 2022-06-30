@@ -9,8 +9,8 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	kitlog "github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/log/level"
+	kitlog "github.com/go-kit/log"
+	"github.com/go-kit/log/level"
 )
 
 func BenchmarkLog_LogrusDebugLevel(b *testing.B) {
