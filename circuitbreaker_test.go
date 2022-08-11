@@ -7,7 +7,7 @@ import (
 
 	eapachebreaker "github.com/eapache/go-resiliency/breaker"
 
-	cep21circuit "github.com/cep21/circuit"
+	cep21circuit "github.com/cep21/circuit/v3"
 
 	circuit "github.com/rubyist/circuitbreaker"
 
