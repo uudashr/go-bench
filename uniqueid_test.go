@@ -7,20 +7,21 @@ import (
 	"testing"
 
 	hashicorpuuid "github.com/hashicorp/go-uuid"
+	"github.com/rs/xid"
 
 	satoriuuid "github.com/satori/go.uuid"
 
 	googleuuid "github.com/google/uuid"
 )
 
-func BenchmarkUUID_Google(b *testing.B) {
+func BenchmarkUniqueID_UUID_Google(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		s := googleuuid.New().String()
 		_ = s
 	}
 }
 
-func BenchmarkUUID_Hashicorp(b *testing.B) {
+func BenchmarkUniqueID_UUID_Hashicorp(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		s, err := hashicorpuuid.GenerateUUID()
 		if err != nil {
@@ -30,19 +31,26 @@ func BenchmarkUUID_Hashicorp(b *testing.B) {
 	}
 }
 
-func BenchmarkUUID_Satori(b *testing.B) {
+func BenchmarkUniqueID_UUID_Satori(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		s := satoriuuid.NewV4().String()
 		_ = s
 	}
 }
 
-func BenchmarkUUID_Custom(b *testing.B) {
+func BenchmarkUniqueID_UUID_Custom(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		s, err := newUUID()
 		if err != nil {
 			b.Fatal("Fail to generate UUID:", err)
 		}
+		_ = s
+	}
+}
+
+func BenchmarkUniqueID_XID(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		s := xid.New().String()
 		_ = s
 	}
 }
