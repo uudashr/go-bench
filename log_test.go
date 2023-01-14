@@ -7,6 +7,8 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
 	"golang.org/x/exp/slog"
 
 	gokitlog "github.com/go-kit/log"
@@ -118,6 +120,34 @@ func BenchmarkLog_SlogInfoLevel(b *testing.B) {
 	}
 }
 
+func BenchmarkLog_ZapDebugLevel(b *testing.B) {
+	logger, cleanUp := setupZapLogger(zap.DebugLevel)
+	defer cleanUp()
+
+	b.ResetTimer()
+	defer b.StopTimer()
+
+	for i := 0; i < b.N; i++ {
+		logger.Info("Hello, World!", zap.String("name", "Nuruddin Ashr"))
+		logger.Debug("Hello, World!", zap.String("name", "Nuruddin Ashr"))
+		logger.Sync()
+	}
+}
+
+func BenchmarkLog_ZapInfoLevel(b *testing.B) {
+	logger, cleanUp := setupZapLogger(zap.InfoLevel)
+	defer cleanUp()
+
+	b.ResetTimer()
+	defer b.StopTimer()
+
+	for i := 0; i < b.N; i++ {
+		logger.Info("Hello, World!", zap.String("name", "Nuruddin Ashr"))
+		logger.Debug("Hello, World!", zap.String("name", "Nuruddin Ashr"))
+		logger.Sync()
+	}
+}
+
 func setupLogrusLogger() (*logrus.Logger, func()) {
 	f, err := os.CreateTemp("", "logbench.*.log")
 	if err != nil {
@@ -166,5 +196,29 @@ func setupSlogLogger(opts slog.HandlerOptions) (*slog.Logger, func()) {
 	}
 
 	logger := slog.New(handler)
+	return logger, cleanUp
+}
+
+func setupZapLogger(level zapcore.Level) (*zap.Logger, func()) {
+	f, err := os.CreateTemp("", "logbench.*.log")
+	if err != nil {
+		panic(fmt.Sprint("Fail to create temp file:", err))
+	}
+
+	ec := zap.NewProductionEncoderConfig()
+	ec.EncodeTime = zapcore.ISO8601TimeEncoder
+
+	jsonEncoder := zapcore.NewJSONEncoder(ec)
+	core := zapcore.NewTee(
+		zapcore.NewCore(jsonEncoder, zapcore.AddSync(f), level),
+	)
+
+	logger := zap.New(core)
+
+	cleanUp := func() {
+		f.Close()
+		os.Remove(f.Name())
+	}
+
 	return logger, cleanUp
 }
