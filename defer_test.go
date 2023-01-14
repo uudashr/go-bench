@@ -2,30 +2,30 @@ package bench_test
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"testing"
 )
 
 func doNoDefer(t *int) {
-	fmt.Fprintln(ioutil.Discard, "Main logic")
+	fmt.Fprintln(io.Discard, "Main logic")
 
-	fmt.Fprintln(ioutil.Discard, "Closure")
+	fmt.Fprintln(io.Discard, "Closure")
 }
 
 func doNoDeferClosureFunc(t *int) {
-	fmt.Fprintln(ioutil.Discard, "Main logic")
+	fmt.Fprintln(io.Discard, "Main logic")
 
 	func() {
-		fmt.Fprintln(ioutil.Discard, "Closure")
+		fmt.Fprintln(io.Discard, "Closure")
 	}()
 }
 
 func doDefer(t *int) {
 	defer func() {
 		*t++
-		fmt.Fprintln(ioutil.Discard, "Closure")
+		fmt.Fprintln(io.Discard, "Closure")
 	}()
-	fmt.Fprintln(ioutil.Discard, "Main logic")
+	fmt.Fprintln(io.Discard, "Main logic")
 }
 
 func BenchmarkDeferYes(b *testing.B) {

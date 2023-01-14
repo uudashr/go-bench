@@ -2,7 +2,6 @@ package bench_test
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -120,7 +119,7 @@ func BenchmarkLog_SlogInfoLevel(b *testing.B) {
 }
 
 func setupLogrusLogger() (*logrus.Logger, func()) {
-	f, err := ioutil.TempFile("", "logbench.*.log")
+	f, err := os.CreateTemp("", "logbench.*.log")
 	if err != nil {
 		panic(fmt.Sprint("Fail to create temp file:", err))
 	}
@@ -138,7 +137,7 @@ func setupLogrusLogger() (*logrus.Logger, func()) {
 }
 
 func setupGokitLogger() (gokitlog.Logger, func()) {
-	f, err := ioutil.TempFile("", "logbench.*.log")
+	f, err := os.CreateTemp("", "logbench.*.log")
 	if err != nil {
 		panic(fmt.Sprint("Fail to create temp file:", err))
 	}
@@ -154,7 +153,7 @@ func setupGokitLogger() (gokitlog.Logger, func()) {
 }
 
 func setupSlogLogger(opts slog.HandlerOptions) (*slog.Logger, func()) {
-	f, err := ioutil.TempFile("", "logbench.*.log")
+	f, err := os.CreateTemp("", "logbench.*.log")
 	if err != nil {
 		panic(fmt.Sprint("Fail to create temp file:", err))
 	}
