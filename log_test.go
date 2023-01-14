@@ -130,7 +130,7 @@ func BenchmarkLog_ZapDebugLevel(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		logger.Info("Hello, World!", zap.String("name", "Nuruddin Ashr"))
 		logger.Debug("Hello, World!", zap.String("name", "Nuruddin Ashr"))
-		logger.Sync()
+		// logger.Sync()
 	}
 }
 
@@ -144,7 +144,7 @@ func BenchmarkLog_ZapInfoLevel(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		logger.Info("Hello, World!", zap.String("name", "Nuruddin Ashr"))
 		logger.Debug("Hello, World!", zap.String("name", "Nuruddin Ashr"))
-		logger.Sync()
+		// logger.Sync()
 	}
 }
 
