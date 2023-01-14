@@ -8,8 +8,9 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+	"golang.org/x/exp/slog"
 
-	kitlog "github.com/go-kit/log"
+	gokitlog "github.com/go-kit/log"
 	"github.com/go-kit/log/level"
 )
 
@@ -51,7 +52,7 @@ func BenchmarkLog_LogrusInfoLevel(b *testing.B) {
 }
 
 func BenchmarkLog_GokitDebugLevel(b *testing.B) {
-	logger, cleanUp := setupKitLogger()
+	logger, cleanUp := setupGokitLogger()
 	defer cleanUp()
 
 	b.ResetTimer()
@@ -71,7 +72,7 @@ func BenchmarkLog_GokitDebugLevel(b *testing.B) {
 }
 
 func BenchmarkLog_GokitInfoLevel(b *testing.B) {
-	logger, cleanUp := setupKitLogger()
+	logger, cleanUp := setupGokitLogger()
 	defer cleanUp()
 
 	logger = level.NewFilter(logger, level.AllowInfo())
@@ -89,6 +90,32 @@ func BenchmarkLog_GokitInfoLevel(b *testing.B) {
 			"msg", "Hello, World!",
 			"name", "Nuruddin Ashr",
 		)
+	}
+}
+
+func BenchmarkLog_SlogDebugLevel(b *testing.B) {
+	logger, cleanUp := setupSlogLogger(slog.HandlerOptions{Level: slog.LevelDebug})
+	defer cleanUp()
+
+	b.ResetTimer()
+	defer b.StopTimer()
+
+	for i := 0; i < b.N; i++ {
+		logger.Info("Hello, World!", slog.String("name", "Nuruddin Ashr"))
+		logger.Debug("Hello, World!", slog.String("name", "Nuruddin Ashr"))
+	}
+}
+
+func BenchmarkLog_SlogInfoLevel(b *testing.B) {
+	logger, cleanUp := setupSlogLogger(slog.HandlerOptions{Level: slog.LevelInfo})
+	defer cleanUp()
+
+	b.ResetTimer()
+	defer b.StopTimer()
+
+	for i := 0; i < b.N; i++ {
+		logger.Info("Hello, World!", slog.String("name", "Nuruddin Ashr"))
+		logger.Debug("Hello, World!", slog.String("name", "Nuruddin Ashr"))
 	}
 }
 
@@ -110,18 +137,35 @@ func setupLogrusLogger() (*logrus.Logger, func()) {
 	return logger, cleanUp
 }
 
-func setupKitLogger() (kitlog.Logger, func()) {
+func setupGokitLogger() (gokitlog.Logger, func()) {
 	f, err := ioutil.TempFile("", "logbench.*.log")
 	if err != nil {
 		panic(fmt.Sprint("Fail to create temp file:", err))
 	}
 
-	logger := kitlog.NewJSONLogger(f)
-	kitlog.With(logger, "time", kitlog.TimestampFormat(time.Now, time.RFC3339))
+	logger := gokitlog.NewJSONLogger(f)
+	gokitlog.With(logger, "time", gokitlog.TimestampFormat(time.Now, time.RFC3339))
 
 	cleanUp := func() {
 		f.Close()
 		os.Remove(f.Name())
 	}
+	return logger, cleanUp
+}
+
+func setupSlogLogger(opts slog.HandlerOptions) (*slog.Logger, func()) {
+	f, err := ioutil.TempFile("", "logbench.*.log")
+	if err != nil {
+		panic(fmt.Sprint("Fail to create temp file:", err))
+	}
+
+	handler := opts.NewJSONHandler(f)
+
+	cleanUp := func() {
+		f.Close()
+		os.Remove(f.Name())
+	}
+
+	logger := slog.New(handler)
 	return logger, cleanUp
 }
