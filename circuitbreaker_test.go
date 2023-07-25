@@ -5,17 +5,13 @@ import (
 	"testing"
 	"time"
 
-	eapachebreaker "github.com/eapache/go-resiliency/breaker"
-
-	cep21circuit "github.com/cep21/circuit/v3"
-
-	circuit "github.com/rubyist/circuitbreaker"
-
-	"github.com/streadway/handy/breaker"
-
-	"github.com/sony/gobreaker"
-
 	"github.com/afex/hystrix-go/hystrix"
+	cep21circuit "github.com/cep21/circuit/v3"
+	eapachebreaker "github.com/eapache/go-resiliency/breaker"
+	rubyistbreaker "github.com/rubyist/circuitbreaker"
+	resiliencebreaker "github.com/slok/goresilience/circuitbreaker"
+	"github.com/sony/gobreaker"
+	"github.com/streadway/handy/breaker"
 )
 
 func BenchmarkCircuitBreaker_None(b *testing.B) {
@@ -70,7 +66,7 @@ func BenchmarkCircuitBreaker_HandyBreaker(b *testing.B) {
 }
 
 func BenchmarkCircuitBreaker_RubyistBreaker(b *testing.B) {
-	cb := circuit.NewBreaker()
+	cb := rubyistbreaker.NewBreaker()
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
@@ -98,6 +94,17 @@ func BenchmarkCircuitBreaker_GoResiliency(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		cb.Run(func() error {
+			_, err := simpleCall()
+			return err
+		})
+	}
+}
+
+func BenchmarkCircuitBreaker_GoResilience(b *testing.B) {
+	runner := resiliencebreaker.New(resiliencebreaker.Config{})
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		runner.Run(context.Background(), func(context.Context) error {
 			_, err := simpleCall()
 			return err
 		})
