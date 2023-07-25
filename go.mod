@@ -1,6 +1,6 @@
 module github.com/uudashr/go-bench
 
-go 1.19
+go 1.20
 
 require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
