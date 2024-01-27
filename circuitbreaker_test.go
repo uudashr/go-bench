@@ -8,6 +8,7 @@ import (
 	"github.com/afex/hystrix-go/hystrix"
 	cep21circuit "github.com/cep21/circuit/v3"
 	eapachebreaker "github.com/eapache/go-resiliency/breaker"
+	"github.com/exaring/hoglet"
 	rubyistbreaker "github.com/rubyist/circuitbreaker"
 	resiliencebreaker "github.com/slok/goresilience/circuitbreaker"
 	"github.com/sony/gobreaker"
@@ -108,6 +109,24 @@ func BenchmarkCircuitBreaker_GoResilience(b *testing.B) {
 			_, err := simpleCall()
 			return err
 		})
+	}
+}
+
+func BenchmarkCircuitBreaker_Hoglet(b *testing.B) {
+	h, err := hoglet.NewCircuit[any, any](
+		func(ctx context.Context, _ any) (any, error) {
+			return simpleCall()
+		},
+		hoglet.NewSlidingWindowBreaker(10*time.Second, 0.1),
+		hoglet.WithFailureCondition(hoglet.IgnoreContextCanceled),
+	)
+	if err != nil {
+		b.Fatal(err)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		h.Call(context.Background(), nil)
 	}
 }
 
