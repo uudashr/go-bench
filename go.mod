@@ -8,7 +8,7 @@ require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
 	github.com/cep21/circuit/v3 v3.2.2
 	github.com/eapache/go-resiliency v1.3.0
-	github.com/exaring/hoglet v0.2.1
+	github.com/exaring/hoglet v0.2.2
 	github.com/go-kit/log v0.2.1
 	github.com/google/uuid v1.3.0
 	github.com/hashicorp/go-uuid v1.0.3

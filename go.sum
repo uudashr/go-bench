@@ -15,8 +15,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/eapache/go-resiliency v1.3.0 h1:RRL0nge+cWGlxXbUzJ7yMcq6w2XBEr19dCN6HECGaT0=
 github.com/eapache/go-resiliency v1.3.0/go.mod h1:5yPzW0MIvSe0JDsv0v+DvcjEv2FyD6iZYSs1ZI+iQho=
-github.com/exaring/hoglet v0.2.1 h1:tyk6TyBzxXbiIOgg7HsIqhFxu7VW4RZq+Q+JL0VjXo8=
-github.com/exaring/hoglet v0.2.1/go.mod h1:AA7UnDFmuF9gNEuZBNaLc5cB1FieyGfWCn8GneG1YWI=
+github.com/exaring/hoglet v0.2.2 h1:Zb54Ev+qCEDsBHNEBkdleRpQ0ccjNTSnavBtsjZLwxg=
+github.com/exaring/hoglet v0.2.2/go.mod h1:AA7UnDFmuF9gNEuZBNaLc5cB1FieyGfWCn8GneG1YWI=
 github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a h1:yDWHCSQ40h88yih2JAcL6Ls/kVkSE8GFACTGVnMPruw=
 github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a/go.mod h1:7Ga40egUymuWXxAe151lTNnCv97MddSOVsjpPPkityA=
 github.com/go-kit/log v0.2.1 h1:MRVx0/zhvdseW+Gza6N9rVzU/IVzaeE1SFI4raAhmBU=
