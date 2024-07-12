@@ -31,12 +31,14 @@ func BenchmarkReadReader_readAllString(b *testing.B) {
 	}
 }
 
-func BenchmarkReadReader_stringBuilder(b *testing.B) {
+func BenchmarkReadReader_stringsBuilder(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		b.StopTimer()
 		f, err := os.Open("testdata/loremipsum/lorem_5p.txt")
 		if err != nil {
 			b.Fatal(err)
 		}
+		b.StartTimer()
 
 		var sb strings.Builder
 		_, err = io.Copy(&sb, f)
@@ -55,10 +57,12 @@ func BenchmarkReadReader_stringBuilder(b *testing.B) {
 
 func BenchmarkReadReader_bytesBuffer(b *testing.B) {
 	for i := 0; i < b.N; i++ {
+		b.StopTimer()
 		f, err := os.Open("testdata/loremipsum/lorem_5p.txt")
 		if err != nil {
 			b.Fatal(err)
 		}
+		b.StartTimer()
 
 		var buf bytes.Buffer
 		_, err = buf.ReadFrom(f)
