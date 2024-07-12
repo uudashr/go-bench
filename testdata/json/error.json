@@ -1,8 +1,8 @@
 {
-    "error": {
-      "code": 404,
-      "message": "Resource not found",
-      "details": "The requested resource with ID 12345 could not be found on the server.",
-      "timestamp": "2024-07-12T14:30:00Z"
-    }
+  "error": {
+    "code": 404,
+    "message": "Resource not found",
+    "details": "The requested resource with ID 12345 could not be found on the server.",
+    "timestamp": "2024-07-12T14:30:00Z"
   }
+}
