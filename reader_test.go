@@ -8,10 +8,10 @@ import (
 	"testing"
 )
 
-func BenchmarkReadReader_readAllString(b *testing.B) {
+func BenchmarkReadReader_readAllJSONString(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		f, err := os.Open("testdata/loremipsum/lorem_5p.txt")
+		f, err := os.Open("testdata/json/error.json")
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -31,10 +31,10 @@ func BenchmarkReadReader_readAllString(b *testing.B) {
 	}
 }
 
-func BenchmarkReadReader_stringsBuilder(b *testing.B) {
+func BenchmarkReadReader_stringsBuilderJSON(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		f, err := os.Open("testdata/loremipsum/lorem_5p.txt")
+		f, err := os.Open("testdata/json/error.json")
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -55,10 +55,10 @@ func BenchmarkReadReader_stringsBuilder(b *testing.B) {
 	}
 }
 
-func BenchmarkReadReader_bytesBuffer(b *testing.B) {
+func BenchmarkReadReader_bytesBufferJSONString(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		b.StopTimer()
-		f, err := os.Open("testdata/loremipsum/lorem_5p.txt")
+		f, err := os.Open("testdata/json/error.json")
 		if err != nil {
 			b.Fatal(err)
 		}
