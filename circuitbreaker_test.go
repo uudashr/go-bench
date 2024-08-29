@@ -9,6 +9,8 @@ import (
 	cep21circuit "github.com/cep21/circuit/v3"
 	eapachebreaker "github.com/eapache/go-resiliency/breaker"
 	"github.com/exaring/hoglet"
+	"github.com/failsafe-go/failsafe-go"
+	failsafebreaker "github.com/failsafe-go/failsafe-go/circuitbreaker"
 	rubyistbreaker "github.com/rubyist/circuitbreaker"
 	resiliencebreaker "github.com/slok/goresilience/circuitbreaker"
 	"github.com/sony/gobreaker"
@@ -127,6 +129,18 @@ func BenchmarkCircuitBreaker_Hoglet(b *testing.B) {
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		h.Call(context.Background(), nil)
+	}
+}
+
+func BenchmarkCircuitBreaker_FailsafeGo(b *testing.B) {
+	breaker := failsafebreaker.WithDefaults[any]()
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		failsafe.Run(func() error {
+			_, err := simpleCall()
+			return err
+		}, breaker)
 	}
 }
 

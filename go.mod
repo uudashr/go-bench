@@ -9,6 +9,7 @@ require (
 	github.com/cep21/circuit/v3 v3.2.2
 	github.com/eapache/go-resiliency v1.3.0
 	github.com/exaring/hoglet v0.2.2
+	github.com/failsafe-go/failsafe-go v0.6.8
 	github.com/go-kit/log v0.2.1
 	github.com/google/uuid v1.3.0
 	github.com/hashicorp/go-uuid v1.0.3
@@ -25,6 +26,7 @@ require (
 
 require (
 	github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973 // indirect
+	github.com/bits-and-blooms/bitset v1.13.0 // indirect
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
@@ -42,5 +44,5 @@ require (
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.1.0 // indirect
+	golang.org/x/sys v0.21.0 // indirect
 )
