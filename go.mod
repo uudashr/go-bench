@@ -1,6 +1,6 @@
 module github.com/uudashr/go-bench
 
-go 1.23.0
+go 1.24.0
 
 require (
 	github.com/afex/hystrix-go v0.0.0-20180502004556-fa1af6a1f4f5
@@ -28,6 +28,7 @@ require (
 	github.com/cenk/backoff v2.2.1+incompatible // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/go-logfmt/logfmt v0.5.1 // indirect
+	github.com/go-viper/mapstructure/v2 v2.2.1
 	github.com/golang/protobuf v1.2.0 // indirect
 	github.com/gopherjs/gopherjs v0.0.0-20200217142428-fce0ec30dd00 // indirect
 	github.com/kr/text v0.2.0 // indirect
