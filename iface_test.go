@@ -7,14 +7,14 @@ import (
 )
 
 func BenchmarkFuncCall(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		stat := Binary(200)
 		_ = stringCall(stat)
 	}
 }
 
 func BenchmarkFuncCallIface(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b := Binary(200)
 		_ = stringCallIface(b)
 	}

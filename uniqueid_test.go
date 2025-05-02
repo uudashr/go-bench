@@ -15,14 +15,14 @@ import (
 )
 
 func BenchmarkUniqueID_UUID_Google(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		s := googleuuid.New().String()
 		_ = s
 	}
 }
 
 func BenchmarkUniqueID_UUID_Hashicorp(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		s, err := hashicorpuuid.GenerateUUID()
 		if err != nil {
 			b.Fatal("Fail to generate UUID:", err)
@@ -32,14 +32,14 @@ func BenchmarkUniqueID_UUID_Hashicorp(b *testing.B) {
 }
 
 func BenchmarkUniqueID_UUID_Satori(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		s := satoriuuid.NewV4().String()
 		_ = s
 	}
 }
 
 func BenchmarkUniqueID_UUID_Custom(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		s, err := newUUID()
 		if err != nil {
 			b.Fatal("Fail to generate UUID:", err)
@@ -49,7 +49,7 @@ func BenchmarkUniqueID_UUID_Custom(b *testing.B) {
 }
 
 func BenchmarkUniqueID_XID(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		s := xid.New().String()
 		_ = s
 	}

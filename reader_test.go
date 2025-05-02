@@ -10,7 +10,7 @@ import (
 )
 
 func BenchmarkReadReader_readAllJSONString(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		f, err := os.Open("testdata/json/error.json")
 		if err != nil {
@@ -33,7 +33,7 @@ func BenchmarkReadReader_readAllJSONString(b *testing.B) {
 }
 
 func BenchmarkReadReader_stringsBuilderJSON(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		f, err := os.Open("testdata/json/error.json")
 		if err != nil {
@@ -57,7 +57,7 @@ func BenchmarkReadReader_stringsBuilderJSON(b *testing.B) {
 }
 
 func BenchmarkReadReader_bytesBufferJSONString(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		b.StopTimer()
 		f, err := os.Open("testdata/json/error.json")
 		if err != nil {

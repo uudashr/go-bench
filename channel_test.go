@@ -6,14 +6,14 @@ import (
 )
 
 func BenchmarkChannel_Close(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for i := 0; b.Loop(); i++ {
 		out := formatAsyncClose("Hello World %d", i)
 		<-out
 	}
 }
 
 func BenchmarkChannel_NoClose(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for i := 0; b.Loop(); i++ {
 		out := formatAsyncNoClose("Hello World %d", i)
 		<-out
 	}

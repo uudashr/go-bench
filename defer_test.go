@@ -30,21 +30,21 @@ func doDefer(t *int) {
 
 func BenchmarkDeferYes(b *testing.B) {
 	t := 0
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		doDefer(&t)
 	}
 }
 
 func BenchmarkDeferNo(b *testing.B) {
 	t := 0
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		doNoDefer(&t)
 	}
 }
 
 func BenchmarkDeferNo_ClosureFunc(b *testing.B) {
 	t := 0
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		doNoDeferClosureFunc(&t)
 	}
 }

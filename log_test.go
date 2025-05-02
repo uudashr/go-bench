@@ -19,10 +19,7 @@ func BenchmarkLog_LogrusDebugLevel(b *testing.B) {
 	logger, cleanUp := setupLogrusLogger()
 	defer cleanUp()
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		logger.WithFields(logrus.Fields{
 			"name": "Nuruddin Ashr",
 		}).Info("Hello, World!")
@@ -38,10 +35,7 @@ func BenchmarkLog_LogrusInfoLevel(b *testing.B) {
 
 	logger.SetLevel(logrus.InfoLevel)
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		logger.WithFields(logrus.Fields{
 			"name": "Nuruddin Ashr",
 		}).Info("Hello, World!")
@@ -56,10 +50,7 @@ func BenchmarkLog_GokitDebugLevel(b *testing.B) {
 	logger, cleanUp := setupGokitLogger()
 	defer cleanUp()
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		level.Info(logger).Log(
 			"msg", "Hello, World!",
 			"name", "Nuruddin Ashr",
@@ -78,10 +69,7 @@ func BenchmarkLog_GokitInfoLevel(b *testing.B) {
 
 	logger = level.NewFilter(logger, level.AllowInfo())
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		level.Info(logger).Log(
 			"msg", "Hello, World!",
 			"name", "Nuruddin Ashr",
@@ -98,10 +86,7 @@ func BenchmarkLog_SlogDebugLevel(b *testing.B) {
 	logger, cleanUp := setupSlogLogger(slog.HandlerOptions{Level: slog.LevelDebug})
 	defer cleanUp()
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		logger.Info("Hello, World!", slog.String("name", "Nuruddin Ashr"))
 		logger.Debug("Hello, World!", slog.String("name", "Nuruddin Ashr"))
 	}
@@ -111,10 +96,7 @@ func BenchmarkLog_SlogInfoLevel(b *testing.B) {
 	logger, cleanUp := setupSlogLogger(slog.HandlerOptions{Level: slog.LevelInfo})
 	defer cleanUp()
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		logger.Info("Hello, World!", slog.String("name", "Nuruddin Ashr"))
 		logger.Debug("Hello, World!", slog.String("name", "Nuruddin Ashr"))
 	}
@@ -124,10 +106,7 @@ func BenchmarkLog_ZapDebugLevel(b *testing.B) {
 	logger, cleanUp := setupZapLogger(zap.DebugLevel)
 	defer cleanUp()
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		logger.Info("Hello, World!", zap.String("name", "Nuruddin Ashr"))
 		logger.Debug("Hello, World!", zap.String("name", "Nuruddin Ashr"))
 		// logger.Sync()
@@ -138,10 +117,7 @@ func BenchmarkLog_ZapInfoLevel(b *testing.B) {
 	logger, cleanUp := setupZapLogger(zap.InfoLevel)
 	defer cleanUp()
 
-	b.ResetTimer()
-	defer b.StopTimer()
-
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		logger.Info("Hello, World!", zap.String("name", "Nuruddin Ashr"))
 		logger.Debug("Hello, World!", zap.String("name", "Nuruddin Ashr"))
 		// logger.Sync()

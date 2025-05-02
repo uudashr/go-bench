@@ -18,7 +18,7 @@ import (
 )
 
 func BenchmarkCircuitBreaker_None(b *testing.B) {
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		simpleCall()
 	}
 }
@@ -26,8 +26,7 @@ func BenchmarkCircuitBreaker_None(b *testing.B) {
 func BenchmarkCircuitBreaker_Hystrix(b *testing.B) {
 	hystrix.ConfigureCommand("simpleCall", hystrix.CommandConfig{})
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		hystrix.Do("simpleCall", func() error {
 			_, err := simpleCall()
 			return err
@@ -40,8 +39,7 @@ func BenchmarkCircuitBreaker_GoBreaker(b *testing.B) {
 		Name: "simpleCall",
 	})
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		cb.Execute(func() (interface{}, error) {
 			return simpleCall()
 		})
@@ -71,8 +69,7 @@ func BenchmarkCircuitBreaker_HandyBreaker(b *testing.B) {
 func BenchmarkCircuitBreaker_RubyistBreaker(b *testing.B) {
 	cb := rubyistbreaker.NewBreaker()
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		cb.Call(func() error {
 			_, err := simpleCall()
 			return err
@@ -83,8 +80,7 @@ func BenchmarkCircuitBreaker_RubyistBreaker(b *testing.B) {
 func BenchmarkCircuitBreaker_Cep21Circuit(b *testing.B) {
 	cb := cep21circuit.NewCircuitFromConfig("simpleCall", cep21circuit.Config{})
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		cb.Run(context.Background(), func(ctx context.Context) error {
 			_, err := simpleCall()
 			return err
@@ -94,8 +90,8 @@ func BenchmarkCircuitBreaker_Cep21Circuit(b *testing.B) {
 
 func BenchmarkCircuitBreaker_GoResiliency(b *testing.B) {
 	cb := eapachebreaker.New(5, 10, 5*time.Second)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		cb.Run(func() error {
 			_, err := simpleCall()
 			return err
@@ -105,8 +101,8 @@ func BenchmarkCircuitBreaker_GoResiliency(b *testing.B) {
 
 func BenchmarkCircuitBreaker_GoResilience(b *testing.B) {
 	runner := resiliencebreaker.New(resiliencebreaker.Config{})
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+
+	for b.Loop() {
 		runner.Run(context.Background(), func(context.Context) error {
 			_, err := simpleCall()
 			return err
@@ -115,7 +111,7 @@ func BenchmarkCircuitBreaker_GoResilience(b *testing.B) {
 }
 
 func BenchmarkCircuitBreaker_Hoglet(b *testing.B) {
-	h, err := hoglet.NewCircuit[any, any](
+	h, err := hoglet.NewCircuit(
 		func(ctx context.Context, _ any) (any, error) {
 			return simpleCall()
 		},
@@ -126,8 +122,7 @@ func BenchmarkCircuitBreaker_Hoglet(b *testing.B) {
 		b.Fatal(err)
 	}
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		h.Call(context.Background(), nil)
 	}
 }
@@ -135,8 +130,7 @@ func BenchmarkCircuitBreaker_Hoglet(b *testing.B) {
 func BenchmarkCircuitBreaker_FailsafeGo(b *testing.B) {
 	breaker := failsafebreaker.WithDefaults[any]()
 
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		failsafe.Run(func() error {
 			_, err := simpleCall()
 			return err
